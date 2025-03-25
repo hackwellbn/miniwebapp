@@ -15,14 +15,17 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`${baseUrl}/films`) 
         .then(response => response.json())
         .then(data => {
-            movies = data;
+            moviesData = data;
             displayMovies(movies);
             selectMovie(movies[0]);
         });
 
-    function displayMovies(movies) {
+
+        //so here we are fetching the data from the server and then we are displaying the movies
+
+    function displayMovies(moviesData) {
         filmsList.innerHTML = "";
-        movies.forEach(movie => {
+        moviesData.forEach(movie => {
             const li = document.createElement("li");
             li.textContent = movie.title;
             li.classList.add("film-item");
@@ -30,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
             filmsList.appendChild(li);
         });
     }
+
+    //pick the movie and display it
 
     function selectMovie(movie) {
         selectedMovie = movie;
@@ -42,6 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
         buyTicketButton.disabled = movie.capacity - movie.tickets_sold === 0;
     }
 
+
+    //listen for the click event on the buy ticket button and then we are sending the data to the server
     buyTicketButton.addEventListener("click", (e) => {
         e.preventDefault();
 
